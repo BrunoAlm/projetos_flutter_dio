@@ -1,3 +1,4 @@
+import 'package:first_proj_flutter_dio/main.dart';
 import 'package:first_proj_flutter_dio/src/calculate_imc/calculate_imc_services.dart';
 import 'package:flutter/material.dart';
 
@@ -15,13 +16,6 @@ class _CalculateIMCWidmctState extends State<CalculateImcWidget> {
 
   final alturaEC = TextEditingController();
   final pesoEC = TextEditingController();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    // implementar classe Pessoa
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -80,6 +74,8 @@ class _CalculateIMCWidmctState extends State<CalculateImcWidget> {
                       classificacaoIMC = CalculateIMCServices.classificarIMC(
                         double.parse(valorIMC),
                       );
+                      box.put('valorIMC', valorIMC);
+                      box.put('classificacaoIMC', classificacaoIMC);
                     });
                   },
                   style: ElevatedButton.styleFrom(
@@ -98,15 +94,15 @@ class _CalculateIMCWidmctState extends State<CalculateImcWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    valorIMC.isNotEmpty
+                    box.get('valorIMC') != null
                         ? Text(
-                            'Seu IMC é: $valorIMC',
+                            'Seu IMC é: ${box.get('valorIMC')}',
                             style: Theme.of(context).textTheme.bodyLarge,
                           )
                         : const SizedBox.shrink(),
-                    classificacaoIMC.isNotEmpty
+                    box.get('classificacaoIMC') != null
                         ? Text(
-                            "Sua classificação é: $classificacaoIMC",
+                            "Sua classificação é: ${box.get('classificacaoIMC')}",
                             style: Theme.of(context).textTheme.bodyLarge,
                           )
                         : const SizedBox.shrink(),
