@@ -1,26 +1,38 @@
 import 'package:first_proj_flutter_dio/main.dart';
-import 'package:first_proj_flutter_dio/src/calculate_imc/calculate_imc_services.dart';
+import 'package:first_proj_flutter_dio/src/calculate_imc/services/calculate_imc_services.dart';
+import 'package:first_proj_flutter_dio/src/calculate_imc/imc_hive_config.dart';
+import 'package:first_proj_flutter_dio/src/calculate_imc/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
-class CalculateImcWidget extends StatefulWidget {
+class CalculateImcScreen extends StatefulWidget {
   final String title;
-  const CalculateImcWidget({super.key, required this.title});
+  const CalculateImcScreen({super.key, required this.title});
 
   @override
-  State<CalculateImcWidget> createState() => _CalculateIMCWidmctState();
+  State<CalculateImcScreen> createState() => _CalculateIMCWidmctState();
 }
 
-class _CalculateIMCWidmctState extends State<CalculateImcWidget> {
+class _CalculateIMCWidmctState extends State<CalculateImcScreen> {
+  final ImcHiveConfig _hiveConfig = di();
+
   String valorIMC = '';
   String classificacaoIMC = '';
 
+  final nomeEC = TextEditingController();
   final alturaEC = TextEditingController();
   final pesoEC = TextEditingController();
+
+  @override
+  void initState() {
+    _hiveConfig.initDB();
+    super.initState();
+  }
 
   @override
   void dispose() {
     alturaEC.dispose();
     pesoEC.dispose();
+    nomeEC.dispose();
     super.dispose();
   }
 
@@ -74,8 +86,8 @@ class _CalculateIMCWidmctState extends State<CalculateImcWidget> {
                       classificacaoIMC = CalculateIMCServices.classificarIMC(
                         double.parse(valorIMC),
                       );
-                      box.put('valorIMC', valorIMC);
-                      box.put('classificacaoIMC', classificacaoIMC);
+                      _hiveConfig.box.put('valorIMC', valorIMC);
+                      _hiveConfig.box.put('classificacaoIMC', classificacaoIMC);
                     });
                   },
                   style: ElevatedButton.styleFrom(
@@ -94,15 +106,15 @@ class _CalculateIMCWidmctState extends State<CalculateImcWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    box.get('valorIMC') != null
+                    _hiveConfig.box.get('valorIMC') != null
                         ? Text(
-                            'Seu IMC é: ${box.get('valorIMC')}',
+                            'Seu IMC é: ${_hiveConfig.box.get('valorIMC')}',
                             style: Theme.of(context).textTheme.bodyLarge,
                           )
                         : const SizedBox.shrink(),
-                    box.get('classificacaoIMC') != null
+                    _hiveConfig.box.get('classificacaoIMC') != null
                         ? Text(
-                            "Sua classificação é: ${box.get('classificacaoIMC')}",
+                            "Sua classificação é: ${_hiveConfig.box.get('classificacaoIMC')}",
                             style: Theme.of(context).textTheme.bodyLarge,
                           )
                         : const SizedBox.shrink(),
@@ -112,29 +124,6 @@ class _CalculateIMCWidmctState extends State<CalculateImcWidget> {
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class CustomTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String label;
-
-  const CustomTextField({
-    super.key,
-    required this.controller,
-    required this.label,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        label: Text(label),
-        enabledBorder: const OutlineInputBorder(),
-        focusedBorder: const OutlineInputBorder(),
       ),
     );
   }

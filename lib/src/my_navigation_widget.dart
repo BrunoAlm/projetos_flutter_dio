@@ -1,4 +1,4 @@
-import 'package:first_proj_flutter_dio/src/calculate_imc/calculate_imc_widget.dart';
+import 'package:first_proj_flutter_dio/src/calculate_imc/calculate_imc_screen.dart';
 import 'package:first_proj_flutter_dio/src/first_commit/first_commit_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +15,7 @@ class _MyNavigationState extends State<MyNavigation> {
 
   List<Widget> paginasDesafios = [
     const MyHomePage(title: 'Primeiro Commit'),
-    const CalculateImcWidget(title: 'Calculadora IMC'),
+    const CalculateImcScreen(title: 'Calculadora IMC'),
     const MyHomePage(title: 'Terceiro Commit'),
   ];
 
