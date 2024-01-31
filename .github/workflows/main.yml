@@ -7,6 +7,8 @@ on:
 jobs:
   deploy_web:
     runs-on: ubuntu-latest
+    permissions: 
+        contents: write
     environment: secrets
 
     steps:
@@ -32,9 +34,7 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
+            deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
             publish_dir: ./build/web
             force_orphan: true
-            user_name: 'github-ci[bot]'
-            user_email: 'github-actions[bot]@users.noreply.github.com'
             commit_message: 'Publish to gh-pages'
