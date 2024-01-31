@@ -1,6 +1,7 @@
 import 'package:first_proj_flutter_dio/src/imc/imc_page.dart';
 import 'package:first_proj_flutter_dio/src/cep/cep_page.dart';
 import 'package:first_proj_flutter_dio/src/first_commit/first_commit_page.dart';
+import 'package:first_proj_flutter_dio/src/marvel/marvel_page.dart';
 import 'package:first_proj_flutter_dio/src/posts/posts_page.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,7 @@ class _MyNavigationState extends State<MyNavigation> {
     const ImcPage(title: 'Calculadora de IMC'),
     const CepPage(title: 'Consulta de CEP'),
     const PostsPage(title: 'Posts'),
+    const MarvelPage(title: 'API Marvel Comics'),
   ];
 
   @override
@@ -51,6 +53,10 @@ class _MyNavigationState extends State<MyNavigation> {
               NavigationRailDestination(
                 icon: Icon(Icons.web),
                 label: Text('Postagem'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.person_4_rounded),
+                label: Text('Marvel'),
               ),
             ],
             selectedIndex: _actualPage,
