@@ -33,7 +33,7 @@ jobs:
 
       - name: 'Delete env file'
         run: |
-            rm ./assets/.env
+            rm .env
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
