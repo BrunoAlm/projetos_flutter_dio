@@ -33,7 +33,7 @@ jobs:
 
       - name: 'Delete env file'
         run: |
-            rm .env
+            rm ./assets/.env
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
@@ -42,3 +42,4 @@ jobs:
             publish_dir: ./build/web
             force_orphan: true
             commit_message: 'Publish to gh-pages'
+            destination_dir: ./projetos_flutter_dio
