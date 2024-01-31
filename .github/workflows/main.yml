@@ -42,4 +42,4 @@ jobs:
             publish_dir: ./build/web
             force_orphan: true
             commit_message: 'Publish to gh-pages'
-            destination_dir: ./projetos_flutter_dio
+            destination_dir: ./
