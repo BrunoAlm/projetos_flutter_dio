@@ -24,7 +24,9 @@ class _CommentsPageState extends State<CommentsPage> {
 
   loadComments() async {
     comments = await commentsRepository.listComments(widget.postId);
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
@@ -33,6 +35,7 @@ class _CommentsPageState extends State<CommentsPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Comentários do Post: ${widget.postId}"),
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

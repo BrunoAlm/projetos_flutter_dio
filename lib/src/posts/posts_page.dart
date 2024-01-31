@@ -26,7 +26,9 @@ class _PostsPageState extends State<PostsPage> {
 
   loadPosts() async {
     posts = await postsRepository.getPosts();
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
