@@ -1,5 +1,7 @@
-import 'package:first_proj_flutter_dio/src/calculate_imc/calculate_imc_screen.dart';
-import 'package:first_proj_flutter_dio/src/first_commit/first_commit_widget.dart';
+import 'package:first_proj_flutter_dio/src/imc/imc_page.dart';
+import 'package:first_proj_flutter_dio/src/cep/cep_page.dart';
+import 'package:first_proj_flutter_dio/src/first_commit/first_commit_page.dart';
+import 'package:first_proj_flutter_dio/src/posts/posts_page.dart';
 import 'package:flutter/material.dart';
 
 class MyNavigation extends StatefulWidget {
@@ -13,10 +15,11 @@ class MyNavigation extends StatefulWidget {
 class _MyNavigationState extends State<MyNavigation> {
   int _actualPage = 0;
 
-  List<Widget> paginasDesafios = [
-    const MyHomePage(title: 'Primeiro Commit'),
-    const CalculateImcScreen(title: 'Calculadora IMC'),
-    const MyHomePage(title: 'Terceiro Commit'),
+  List<Widget> allChallenges = [
+    const FirstCommitPae(title: 'Primeiro Commit'),
+    const ImcPage(title: 'Calculadora de IMC'),
+    const CepPage(title: 'Consulta de CEP'),
+    const PostsPage(title: 'Posts'),
   ];
 
   @override
@@ -41,6 +44,14 @@ class _MyNavigationState extends State<MyNavigation> {
                 icon: Icon(Icons.calculate),
                 label: Text('Calculadora IMC'),
               ),
+              NavigationRailDestination(
+                icon: Icon(Icons.my_location),
+                label: Text('Consulta CEP'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.web),
+                label: Text('Postagem'),
+              ),
             ],
             selectedIndex: _actualPage,
             onDestinationSelected: (value) {
@@ -54,7 +65,7 @@ class _MyNavigationState extends State<MyNavigation> {
               padding: const EdgeInsets.all(18.0),
               child: Container(
                 decoration: BoxDecoration(border: Border.all()),
-                child: paginasDesafios[_actualPage],
+                child: allChallenges[_actualPage],
               ),
             ),
           )
