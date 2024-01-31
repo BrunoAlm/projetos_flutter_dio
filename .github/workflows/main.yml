@@ -5,12 +5,16 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  deploy_web:
     runs-on: ubuntu-latest
+    environment: secrets
 
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
             channel: 'stable'
+      - name: 'Create env file'
+        run: |
+            echo "${{ secrets.ENV_FILE }}" > .env
       - uses: bluefireteam/flutter-gh-pages@v8
