@@ -23,13 +23,17 @@ jobs:
         
       - name: 'Create env file'
         run: |
-            echo -e "MARVELPUBLICKEY=${{ secrets.MARVELPUBLICKEY }}\nMARVELAPIKEY=${{ secrets.MARVELAPIKEY }}" > .env
+            echo "${{ secrets.ENV_FILE }}" > .env
 
       - name: Download Dependencies
         run: flutter pub get
 
       - name: Build
         run: flutter build web
+
+      - name: 'Delete env file'
+        run: |
+            rm .env
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
