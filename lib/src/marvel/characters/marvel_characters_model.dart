@@ -79,7 +79,15 @@ class Thumbnail {
   Thumbnail({this.path, this.extension});
 
   Thumbnail.fromJson(Map<String, dynamic> json) {
-    path = json['path'];
+    path = convertToHttps(json['path']);
     extension = json['extension'];
+  }
+
+  String? convertToHttps(String? path) {
+    if (path != null && path.startsWith("http://")) {
+      return path.replaceFirst("http://", "https://");
+    } else {
+      return path;
+    }
   }
 }
