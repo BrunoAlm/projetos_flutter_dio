@@ -16,7 +16,7 @@ class MarvelRepository {
     String query = "offset=$offset&ts=$ts&apikey=$publicKey&hash=$hash";
 
     var result =
-        await dio.get("http://gateway.marvel.com/v1/public/characters?$query");
+        await dio.get("https://gateway.marvel.com/v1/public/characters?$query");
     return MarvelCharactersModel.fromJson(result.data);
   }
 
