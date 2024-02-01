@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:first_proj_flutter_dio/src/cep/viacep_model.dart';
+import 'package:first_proj_flutter_dio/src/modules/cep/viacep_model.dart';
 import 'package:http/http.dart' as http;
 
 class ViaCepRepository {

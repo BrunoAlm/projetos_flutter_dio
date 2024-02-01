@@ -1,5 +1,5 @@
-import 'package:first_proj_flutter_dio/src/posts/post_model.dart';
-import 'package:first_proj_flutter_dio/src/posts/repositories/posts_repository.dart';
+import 'package:first_proj_flutter_dio/src/modules/posts/post_model.dart';
+import 'package:first_proj_flutter_dio/src/modules/posts/repositories/posts_repository.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 

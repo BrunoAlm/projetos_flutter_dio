@@ -1,5 +1,5 @@
-import 'package:first_proj_flutter_dio/src/marvel/characters/marvel_characters_model.dart';
-import 'package:first_proj_flutter_dio/src/marvel/marvel_repository.dart';
+import 'package:first_proj_flutter_dio/src/modules/marvel/characters/marvel_characters_model.dart';
+import 'package:first_proj_flutter_dio/src/modules/marvel/marvel_repository.dart';
 import 'package:flutter/material.dart';
 
 class MarvelPage extends StatefulWidget {

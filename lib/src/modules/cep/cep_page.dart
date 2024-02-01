@@ -1,5 +1,5 @@
-import 'package:first_proj_flutter_dio/src/cep/viacep_model.dart';
-import 'package:first_proj_flutter_dio/src/cep/viacep_repository.dart';
+import 'package:first_proj_flutter_dio/src/modules/cep/viacep_model.dart';
+import 'package:first_proj_flutter_dio/src/modules/cep/viacep_repository.dart';
 import 'package:first_proj_flutter_dio/src/shared/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:convert/convert.dart';
 import 'package:dio/dio.dart';
 import 'package:crypto/crypto.dart' as crypto;
-import 'package:first_proj_flutter_dio/src/marvel/characters/marvel_characters_model.dart';
+import 'package:first_proj_flutter_dio/src/modules/marvel/characters/marvel_characters_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class MarvelRepository {

@@ -1,8 +1,8 @@
-import 'package:first_proj_flutter_dio/src/imc/imc_page.dart';
-import 'package:first_proj_flutter_dio/src/cep/cep_page.dart';
-import 'package:first_proj_flutter_dio/src/first_commit/first_commit_page.dart';
-import 'package:first_proj_flutter_dio/src/marvel/marvel_page.dart';
-import 'package:first_proj_flutter_dio/src/posts/posts_page.dart';
+import 'package:first_proj_flutter_dio/src/modules/imc/imc_page.dart';
+import 'package:first_proj_flutter_dio/src/modules/cep/cep_page.dart';
+import 'package:first_proj_flutter_dio/src/modules/first_commit/first_commit_page.dart';
+import 'package:first_proj_flutter_dio/src/modules/marvel/marvel_page.dart';
+import 'package:first_proj_flutter_dio/src/modules/posts/posts_page.dart';
 import 'package:flutter/material.dart';
 
 class MyNavigation extends StatefulWidget {
