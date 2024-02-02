@@ -1,7 +1,7 @@
-import 'package:first_proj_flutter_dio/src/modules/posts/comments/comments_page.dart';
-import 'package:first_proj_flutter_dio/src/modules/posts/post_model.dart';
-import 'package:first_proj_flutter_dio/src/modules/posts/repositories/dio/posts_dio_repository.dart';
-import 'package:first_proj_flutter_dio/src/modules/posts/repositories/posts_repository.dart';
+import 'package:projetos_flutter_dio/src/modules/posts/comments/comments_page.dart';
+import 'package:projetos_flutter_dio/src/modules/posts/post_model.dart';
+import 'package:projetos_flutter_dio/src/modules/posts/repositories/dio/posts_dio_repository.dart';
+import 'package:projetos_flutter_dio/src/modules/posts/repositories/posts_repository.dart';
 import 'package:flutter/material.dart';
 
 class PostsPage extends StatefulWidget {

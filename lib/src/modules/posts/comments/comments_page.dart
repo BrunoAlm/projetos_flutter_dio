@@ -1,6 +1,6 @@
-import 'package:first_proj_flutter_dio/src/modules/posts/comments/comment_model.dart';
-import 'package:first_proj_flutter_dio/src/modules/posts/repositories/comments_repository.dart';
-import 'package:first_proj_flutter_dio/src/modules/posts/repositories/dio/comments_dio_repository.dart';
+import 'package:projetos_flutter_dio/src/modules/posts/comments/comment_model.dart';
+import 'package:projetos_flutter_dio/src/modules/posts/repositories/comments_repository.dart';
+import 'package:projetos_flutter_dio/src/modules/posts/repositories/dio/comments_dio_repository.dart';
 import 'package:flutter/material.dart';
 
 class CommentsPage extends StatefulWidget {

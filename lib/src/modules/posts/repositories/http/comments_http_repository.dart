@@ -1,5 +1,5 @@
-import 'package:first_proj_flutter_dio/src/modules/posts/comments/comment_model.dart';
-import 'package:first_proj_flutter_dio/src/modules/posts/repositories/comments_repository.dart';
+import 'package:projetos_flutter_dio/src/modules/posts/comments/comment_model.dart';
+import 'package:projetos_flutter_dio/src/modules/posts/repositories/comments_repository.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 

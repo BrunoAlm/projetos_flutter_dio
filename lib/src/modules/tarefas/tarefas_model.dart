@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class TasksModel {
   final List<TaskModel> tarefas;
 
@@ -25,11 +24,11 @@ class TasksModel {
 }
 
 class TaskModel {
-  String? objectId;
-  String description;
-  bool finished;
-  String? createdAt;
-  String? updatedAt;
+  final String objectId;
+  final String description;
+  final bool finished;
+  final String createdAt;
+  final String updatedAt;
 
   TaskModel({
     required this.objectId,
@@ -40,17 +39,22 @@ class TaskModel {
   });
 
   TaskModel.newTask({
+    this.objectId = '',
+    this.createdAt = '',
+    this.updatedAt = '',
     required this.description,
     required this.finished,
   });
 
-  factory TaskModel.fromJson(Map<String, dynamic> map) {
+  set finished(bool finished) => this.finished = finished;
+
+  factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
-      objectId: map['objectId'],
-      description: map['descricao'],
-      finished: map['concluido'],
-      createdAt: map['createdAt'],
-      updatedAt: map['updatedAt'],
+      objectId: json['objectId'],
+      description: json['descricao'],
+      finished: json['concluido'],
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
     );
   }
 

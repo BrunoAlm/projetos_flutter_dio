@@ -1,4 +1,4 @@
-import 'package:first_proj_flutter_dio/my_navigation_widget.dart';
+import 'package:projetos_flutter_dio/my_navigation_widget.dart';
 import 'package:flutter/material.dart';
 
 class AppWidget extends StatelessWidget {

@@ -1,7 +1,7 @@
-import 'package:first_proj_flutter_dio/main.dart';
-import 'package:first_proj_flutter_dio/src/modules/imc/services/calculate_imc_services.dart';
-import 'package:first_proj_flutter_dio/src/modules/imc/imc_hive_config.dart';
-import 'package:first_proj_flutter_dio/src/shared/custom_text_form_field.dart';
+import 'package:projetos_flutter_dio/main.dart';
+import 'package:projetos_flutter_dio/src/modules/imc/services/calculate_imc_services.dart';
+import 'package:projetos_flutter_dio/src/modules/imc/imc_hive_config.dart';
+import 'package:projetos_flutter_dio/src/shared/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class ImcPage extends StatefulWidget {

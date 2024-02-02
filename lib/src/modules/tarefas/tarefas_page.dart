@@ -1,5 +1,5 @@
-import 'package:first_proj_flutter_dio/src/modules/tarefas/tarefas_model.dart';
-import 'package:first_proj_flutter_dio/src/modules/tarefas/tarefas_repository.dart';
+import 'package:projetos_flutter_dio/src/modules/tarefas/tarefas_model.dart';
+import 'package:projetos_flutter_dio/src/modules/tarefas/tarefas_repository.dart';
 import 'package:flutter/material.dart';
 
 class TarefasPage extends StatefulWidget {
@@ -13,15 +13,15 @@ class TarefasPage extends StatefulWidget {
 
 class _TarefasPageState extends State<TarefasPage> {
   late TasksRepository tasksRepository;
-  late TasksModel tasks;
-  final descriptionEC = TextEditingController();
-  var finished = false;
-  var loading = false;
+  late TasksModel _tasks;
+  final _descriptionEC = TextEditingController();
+  var _finished = false;
+  var _loading = false;
 
   @override
   void initState() {
     tasksRepository = TasksRepository();
-    tasks = TasksModel(tarefas: []);
+    _tasks = TasksModel(tarefas: []);
     loadTasks();
     super.initState();
   }
@@ -29,12 +29,12 @@ class _TarefasPageState extends State<TarefasPage> {
   loadTasks() async {
     if (mounted) {
       setState(() {
-        loading = true;
+        _loading = true;
       });
 
-      tasks = await tasksRepository.getTasks(finished);
+      _tasks = await tasksRepository.getTasks(_finished);
       setState(() {
-        loading = false;
+        _loading = false;
       });
     }
   }
@@ -66,14 +66,14 @@ class _TarefasPageState extends State<TarefasPage> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          descriptionEC.text = "";
+          _descriptionEC.text = "";
           showDialog(
             context: context,
             builder: (BuildContext bc) {
               return AlertDialog(
                 title: const Text("Adicionar tarefa"),
                 content: TextField(
-                  controller: descriptionEC,
+                  controller: _descriptionEC,
                 ),
                 actions: [
                   TextButton(
@@ -83,7 +83,7 @@ class _TarefasPageState extends State<TarefasPage> {
                       child: const Text("Cancelar")),
                   TextButton(
                     onPressed: () {
-                      createTask(descriptionEC.text);
+                      createTask(_descriptionEC.text);
                       Navigator.pop(context);
                     },
                     child: const Text("Salvar"),
@@ -94,7 +94,7 @@ class _TarefasPageState extends State<TarefasPage> {
           );
         },
       ),
-      body: tasks.tarefas.isEmpty
+      body: _tasks.tarefas.isEmpty
           ? const Scaffold(
               body: Center(
                   child: Text(
@@ -117,9 +117,9 @@ class _TarefasPageState extends State<TarefasPage> {
                             style: TextStyle(fontSize: 18),
                           ),
                           Switch(
-                            value: finished,
+                            value: _finished,
                             onChanged: (bool value) {
-                              finished = value;
+                              _finished = value;
                               loadTasks();
                             },
                           )
@@ -127,18 +127,18 @@ class _TarefasPageState extends State<TarefasPage> {
                       ),
                     ),
                     const Divider(),
-                    loading
+                    _loading
                         ? const CircularProgressIndicator()
                         : Expanded(
                             child: ListView.builder(
-                              itemCount: tasks.tarefas.length,
+                              itemCount: _tasks.tarefas.length,
                               itemBuilder: (BuildContext bc, int index) {
-                                var task = tasks.tarefas[index];
+                                var task = _tasks.tarefas[index];
                                 return Dismissible(
                                   onDismissed: (DismissDirection
                                       dismissDirection) async {
                                     await tasksRepository
-                                        .deleteTask(task.objectId!);
+                                        .deleteTask(task.objectId);
                                     loadTasks();
                                   },
                                   key: Key(task.description),

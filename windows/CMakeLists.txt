@@ -1,10 +1,10 @@
 # Project-level configuration.
 cmake_minimum_required(VERSION 3.14)
-project(first_proj_flutter_dio LANGUAGES CXX)
+project(projetos_flutter_dio LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-set(BINARY_NAME "first_proj_flutter_dio")
+set(BINARY_NAME "projetos_flutter_dio")
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.
