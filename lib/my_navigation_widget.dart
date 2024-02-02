@@ -3,6 +3,7 @@ import 'package:first_proj_flutter_dio/src/modules/cep/cep_page.dart';
 import 'package:first_proj_flutter_dio/src/modules/first_commit/first_commit_page.dart';
 import 'package:first_proj_flutter_dio/src/modules/marvel/marvel_page.dart';
 import 'package:first_proj_flutter_dio/src/modules/posts/posts_page.dart';
+import 'package:first_proj_flutter_dio/src/modules/tarefas/tarefas_page.dart';
 import 'package:flutter/material.dart';
 
 class MyNavigation extends StatefulWidget {
@@ -22,6 +23,7 @@ class _MyNavigationState extends State<MyNavigation> {
     const CepPage(title: 'Consulta de CEP'),
     const PostsPage(title: 'Posts'),
     const MarvelPage(title: 'API Marvel Comics'),
+    const TarefasPage(title: 'Tarefas com Back4App'),
   ];
 
   @override
@@ -57,6 +59,10 @@ class _MyNavigationState extends State<MyNavigation> {
               NavigationRailDestination(
                 icon: Icon(Icons.person_4_rounded),
                 label: Text('Marvel'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.cloud_upload),
+                label: Text('Tarefas'),
               ),
             ],
             selectedIndex: _actualPage,

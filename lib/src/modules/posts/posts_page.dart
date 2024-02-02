@@ -20,13 +20,15 @@ class _PostsPageState extends State<PostsPage> {
   @override
   void initState() {
     super.initState();
-    postsRepository = PostsDioRepository();
-    loadPosts();
+    if (mounted) {
+      postsRepository = PostsDioRepository();
+      loadPosts();
+    }
   }
 
   loadPosts() async {
-    posts = await postsRepository.getPosts();
     if (mounted) {
+      posts = await postsRepository.getPosts();
       setState(() {});
     }
   }
