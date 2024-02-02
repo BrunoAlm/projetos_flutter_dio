@@ -10,13 +10,13 @@ class MarvelRepository {
     Dio dio = Dio();
 
     String ts = DateTime.now().microsecondsSinceEpoch.toString();
-    String publicKey = dotenv.get("MARVELPUBLICKEY");
-    String privateKey = dotenv.get("MARVELAPIKEY");
+    String publicKey = dotenv.get("MARVEL_PUBLIC_KEY");
+    String privateKey = dotenv.get("MARVEL_API_KEY");
     String hash = _generateMd5(ts + privateKey + publicKey);
     String query = "offset=$offset&ts=$ts&apikey=$publicKey&hash=$hash";
 
-    var result =
-        await dio.get("https://gateway.marvel.com/v1/public/characters?$query");
+    var url = dotenv.get('MARVEL_CHARACTERS_BASE_URL');
+    var result = await dio.get("$url?$query");
     return MarvelCharactersModel.fromJson(result.data);
   }
 
