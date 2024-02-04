@@ -6,7 +6,7 @@ class Back4AppCepRepository {
   final _customDio = Back4AppCustomDio(
     dioInterceptor: Back4AppCepDioInterceptor(),
   );
-  String _url = '/CEP';
+  final String _url = '/CEP';
 
   Back4AppCepRepository();
 
@@ -19,11 +19,12 @@ class Back4AppCepRepository {
     try {
       await _customDio.dio.post(_url, data: cep.toJson());
     } catch (e) {
+      print(e);
       rethrow;
     }
   }
 
-  Future<void> updateTask({required Back4AppCepModel cep}) async {
+  Future<void> updateCEP({required Back4AppCepModel cep}) async {
     try {
       await _customDio.dio.put('$_url/${cep.objectId}', data: cep.toJson());
     } catch (e) {
@@ -31,7 +32,7 @@ class Back4AppCepRepository {
     }
   }
 
-  Future<void> deleteTask(String cepId) async {
+  Future<void> deleteCEP(String cepId) async {
     try {
       await _customDio.dio.delete('$_url/$cepId');
     } catch (e) {

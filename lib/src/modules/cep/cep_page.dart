@@ -20,8 +20,8 @@ class _CepPageState extends State<CepPage> {
   late Back4AppCEPsModel _back4appCeps;
 
   final _cepEC = TextEditingController();
-  bool loading = false;
-  bool loadingBack4app = false;
+  bool _loading = false;
+  bool _loadingBack4app = true;
 
   @override
   void initState() {
@@ -29,6 +29,7 @@ class _CepPageState extends State<CepPage> {
     _back4appCeps = Back4AppCEPsModel(ceps: []);
     _back4AppCepRepository = Back4AppCepRepository();
     _viaCepRepository = ViaCepRepository();
+    loadBack4AppCep();
     super.initState();
   }
 
@@ -38,40 +39,60 @@ class _CepPageState extends State<CepPage> {
     super.dispose();
   }
 
-  getCepFromViaCEP(String value) async {
+  loadBack4AppCep() async {
+    if (mounted) {
+      setState(() {
+        _loadingBack4app = true;
+      });
+      _back4appCeps = await _back4AppCepRepository.listCEP();
+
+      setState(() {
+        _loadingBack4app = false;
+      });
+    }
+  }
+
+  Future<void> getCepFromViaCEP(String value) async {
     setState(() {
-      loading = true;
+      _loading = true;
     });
 
     var cep = value.replaceAll(RegExp(r'[^0-9]'), '');
     if (cep.length == 8) {
       _viaCepModel = await _viaCepRepository.listCEP(cep);
+      await createCepOnBack4App(_viaCepModel);
     }
     setState(() {
-      loading = false;
+      _loading = false;
     });
   }
 
-  createCepOnBack4App() async {
-    _back4appCeps = await _back4AppCepRepository.listCEP();
-
-    if (_back4appCeps.ceps.isNotEmpty) {
-      setState(() {
-        loadingBack4app = true;
-      });
-      var ceps = _back4appCeps.ceps;
-      for (var cep in ceps) {
-        if (cep.cep != _viaCepModel.cep) {
-          await _back4AppCepRepository.createCEP(cep);
-        }
+  Future<void> createCepOnBack4App(ViaCepCepModel cepModel) async {
+    setState(() {
+      _loadingBack4app = true;
+    });
+    var ceps = _back4appCeps.ceps;
+    if (ceps.isEmpty) {
+      await _back4AppCepRepository.createCEP(
+        Back4AppCepModel.fromViaCepModel(cepModel),
+      );
+    } else {
+      if (ceps.any((cep) => cep.cep == cepModel.cep)) {
+        setState(() {
+          _loadingBack4app = false;
+        });
+        return;
+      } else {
+        await _back4AppCepRepository.createCEP(
+          Back4AppCepModel.fromViaCepModel(cepModel),
+        );
       }
-
-      _back4appCeps = await _back4AppCepRepository.listCEP();
-
-      setState(() {
-        loadingBack4app = false;
-      });
     }
+
+    _back4appCeps = await _back4AppCepRepository.listCEP();
+    setState(() {
+      _loadingBack4app = false;
+    });
   }
 
   @override
@@ -81,65 +102,161 @@ class _CepPageState extends State<CepPage> {
         title: Text(widget.title),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => createCepOnBack4App(),
-        child: const Icon(Icons.add),
-      ),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
-            Center(
-              child: SizedBox(
-                width: 200,
-                child: CustomTextField(
-                  controller: _cepEC,
-                  maxLenght: 8,
-                  onChanged: (value) => getCepFromViaCEP(value),
-                  label: 'Buscar CEP',
-                ),
-              ),
-            ),
-            Center(
-              child: Visibility(
-                visible: loading,
-                replacement: Column(
-                  mainAxisSize: MainAxisSize.min,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const SizedBox(height: 10),
-                    Text(
-                      _viaCepModel.logradouro,
-                      style: Theme.of(context).textTheme.bodyLarge,
+                    SizedBox(
+                      width: 200,
+                      child: CustomTextField(
+                        controller: _cepEC,
+                        maxLenght: 8,
+                        onChanged: (value) async =>
+                            await getCepFromViaCEP(value),
+                        label: 'Digite o CEP aqui',
+                        inputBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.black38,
+                          ),
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 15),
-                    Text(
-                      "${_viaCepModel.localidade} - ${_viaCepModel.uf}",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
+                    _cepEC.text.length < 8
+                        ? const SizedBox.shrink()
+                        : _loading
+                            ? const CircularProgressIndicator()
+                            : Card(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .inversePrimary,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 18.0,
+                                    vertical: 9.0,
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        _viaCepModel.cep,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge,
+                                      ),
+                                      Text(
+                                        '${_viaCepModel.logradouro} - ${_viaCepModel.bairro}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                      Text(
+                                        "${_viaCepModel.localidade} - ${_viaCepModel.uf}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
+                                      ),
+                                      Text(
+                                        "DDD ${_viaCepModel.ddd}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                   ],
                 ),
-                child: const CircularProgressIndicator(),
-              ),
+                _back4appCeps.ceps.isEmpty
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 28.0),
+                          child: Text(
+                            'Nenhum CEP registrado!',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'CEPs salvos',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          const Divider(),
+                          _loadingBack4app
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : DataTable(
+                                  sortColumnIndex: 0,
+                                  columns: const [
+                                    DataColumn(label: Text('ID')),
+                                    DataColumn(label: Text('CEP')),
+                                    DataColumn(label: Text('CIDADE')),
+                                    DataColumn(label: Text('ESTADO')),
+                                    DataColumn(label: Text('BAIRRO')),
+                                    DataColumn(label: Text('RUA')),
+                                    DataColumn(label: Text('DDD')),
+                                    DataColumn(label: Text('')),
+                                  ],
+                                  rows: List.generate(
+                                    _back4appCeps.ceps.length,
+                                    (index) {
+                                      var cep = _back4appCeps.ceps[index];
+                                      return DataRow(
+                                        cells: [
+                                          DataCell(
+                                            Text((index + 1).toString()),
+                                          ),
+                                          DataCell(
+                                            Text(cep.cep.toString()),
+                                          ),
+                                          DataCell(
+                                            Text(cep.cidade.toString()),
+                                          ),
+                                          DataCell(
+                                            Text(cep.estado.toString()),
+                                          ),
+                                          DataCell(
+                                            Text(cep.bairro.toString()),
+                                          ),
+                                          DataCell(
+                                            Text(cep.logradouro.toString()),
+                                          ),
+                                          DataCell(
+                                            Text(cep.ddd.toString()),
+                                          ),
+                                          DataCell(
+                                            IconButton(
+                                              onPressed: () async {
+                                                await _back4AppCepRepository
+                                                    .deleteCEP(cep.objectId);
+                                                loadBack4AppCep();
+                                              },
+                                              icon: const Icon(
+                                                Icons.delete,
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                ),
+                        ],
+                      ),
+              ],
             ),
-            const Text('CEPs salvos'),
-            Expanded(
-              child: loadingBack4app
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : ListView.builder(
-                      itemCount: _back4appCeps.ceps.length,
-                      itemBuilder: (context, index) {
-                        var _cep = _back4appCeps.ceps[index];
-                        return DataTable(
-                          columns: [DataColumn(label: Text('CEP'))],
-                          rows: [],
-                        );
-                      },
-                    ),
-            ),
-          ],
+          ),
         ),
       ),
     );

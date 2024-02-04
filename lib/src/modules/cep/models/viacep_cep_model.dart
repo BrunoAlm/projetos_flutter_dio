@@ -25,16 +25,25 @@ class ViaCepCepModel {
 
   factory ViaCepCepModel.fromJson(Map<String, dynamic> json) {
     return ViaCepCepModel(
-      cep: json['cep'],
-      logradouro: json['logradouro'],
-      complemento: json['complemento'],
-      bairro: json['bairro'],
-      localidade: json['localidade'],
-      uf: json['uf'],
-      ibge: json['ibge'],
-      gia: json['gia'],
-      ddd: json['ddd'],
-      siafi: json['siafi'],
+      cep: _checkValue(json['cep']),
+      logradouro: _checkValue(json['logradouro']),
+      complemento: _checkValue(json['complemento']),
+      bairro: _checkValue(json['bairro']),
+      localidade: _checkValue(json['localidade']),
+      uf: _checkValue(json['uf']),
+      ibge: _checkValue(json['ibge']),
+      gia: _checkValue(json['gia']),
+      ddd: _checkValue(json['ddd']),
+      siafi: _checkValue(json['siafi']),
     );
+  }
+
+  static String _checkValue(dynamic value) {
+    if (value == null) {
+      return 'Não encontrado';
+    } else if (value is String && value.isEmpty) {
+      return 'Não cadastrado';
+    }
+    return value.toString();
   }
 }

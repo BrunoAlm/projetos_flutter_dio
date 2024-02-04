@@ -20,7 +20,7 @@ class _MyNavigationState extends State<MyNavigation> {
   List<Widget> allChallenges = [
     const FirstCommitPae(title: 'Primeiro Commit'),
     const ImcPage(title: 'Calculadora de IMC'),
-    const CepPage(title: 'Consulta de CEP'),
+    const CepPage(title: 'Buscar CEP'),
     const PostsPage(title: 'Posts'),
     const MarvelPage(title: 'API Marvel Comics'),
     const TarefasPage(title: 'Tarefas com Back4App'),
@@ -50,7 +50,7 @@ class _MyNavigationState extends State<MyNavigation> {
               ),
               NavigationRailDestination(
                 icon: Icon(Icons.my_location),
-                label: Text('Consulta CEP'),
+                label: Text('Buscar CEP'),
               ),
               NavigationRailDestination(
                 icon: Icon(Icons.web),

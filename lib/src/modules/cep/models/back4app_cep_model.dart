@@ -1,3 +1,5 @@
+import 'package:projetos_flutter_dio/src/modules/cep/models/viacep_cep_model.dart';
+
 class Back4AppCEPsModel {
   final List<Back4AppCepModel> ceps;
 
@@ -7,7 +9,8 @@ class Back4AppCEPsModel {
     var resultsJson = json['results'] as List<dynamic>?;
 
     if (resultsJson != null) {
-      var results = resultsJson.map((v) => Back4AppCepModel.fromJson(v)).toList();
+      var results =
+          resultsJson.map((v) => Back4AppCepModel.fromJson(v)).toList();
       return Back4AppCEPsModel(ceps: results);
     } else {
       return Back4AppCEPsModel(ceps: []);
@@ -49,15 +52,30 @@ class Back4AppCepModel {
   factory Back4AppCepModel.fromJson(Map<String, dynamic> json) {
     return Back4AppCepModel(
       objectId: json['objectId'],
-      cep: json['cep'],
-      logradouro: json['logradouro'],
-      bairro: json['bairro'],
-      ddd: json['ddd'],
-      cidade: json['cidade'],
-      complemento: json['complemento'],
-      estado: json['estado'],
+      cep: json['cep'].toString(),
+      logradouro: _checkValue(json['logradouro']),
+      bairro: _checkValue(json['bairro']),
+      ddd: _checkValue(json['ddd']),
+      cidade: _checkValue(json['cidade']),
+      complemento: _checkValue(json['complemento']),
+      estado: _checkValue(json['estado']),
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
+    );
+  }
+
+  factory Back4AppCepModel.fromViaCepModel(ViaCepCepModel cepModel) {
+    return Back4AppCepModel(
+      objectId: '',
+      cep: cepModel.cep,
+      logradouro: cepModel.logradouro,
+      bairro: cepModel.bairro,
+      ddd: cepModel.ddd,
+      cidade: cepModel.localidade,
+      complemento: cepModel.complemento,
+      estado: cepModel.uf,
+      createdAt: '',
+      updatedAt: '',
     );
   }
 
@@ -71,5 +89,14 @@ class Back4AppCepModel {
     data['complemento'] = complemento;
     data['estado'] = estado;
     return data;
+  }
+
+  static String _checkValue(dynamic value) {
+    if (value == null) {
+      return 'Não encontrado';
+    } else if (value is String && value.isEmpty) {
+      return 'Não cadastrado';
+    }
+    return value.toString();
   }
 }
