@@ -13,7 +13,7 @@ void main() async {
   AppModule.start();
   await Hive.initFlutter();
 
-  final ImcHiveConfig hiveConfig = di();
+  final hiveConfig = di<ImcHiveConfig>();
   await hiveConfig.initDB();
 
   WidgetsFlutterBinding.ensureInitialized();

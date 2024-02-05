@@ -1,3 +1,4 @@
+import 'package:projetos_flutter_dio/main.dart';
 import 'package:projetos_flutter_dio/src/modules/cep/models/back4app_cep_model.dart';
 import 'package:projetos_flutter_dio/src/modules/cep/models/viacep_cep_model.dart';
 import 'package:projetos_flutter_dio/src/modules/cep/repositories/back4app_cep_repository.dart';
@@ -14,21 +15,17 @@ class CepPage extends StatefulWidget {
 }
 
 class _CepPageState extends State<CepPage> {
-  late ViaCepRepository _viaCepRepository;
-  late Back4AppCepRepository _back4AppCepRepository;
-  late ViaCepCepModel _viaCepModel;
-  late Back4AppCEPsModel _back4appCeps;
-
+  final _viaCepRepository = di<ViaCepRepository>();
+  final _back4AppCepRepository = di<Back4AppCepRepository>();
   final _cepEC = TextEditingController();
+
+  var _viaCepModel = ViaCepCepModel();
+  var _back4appCeps = Back4AppCEPsModel(ceps: []);
   bool _loading = false;
   bool _loadingBack4app = true;
 
   @override
   void initState() {
-    _viaCepModel = ViaCepCepModel();
-    _back4appCeps = Back4AppCEPsModel(ceps: []);
-    _back4AppCepRepository = Back4AppCepRepository();
-    _viaCepRepository = ViaCepRepository();
     loadBack4AppCep();
     super.initState();
   }

@@ -1,11 +1,10 @@
 import 'package:projetos_flutter_dio/core/back4app_custom_dio.dart';
+import 'package:projetos_flutter_dio/main.dart';
 import 'package:projetos_flutter_dio/src/modules/cep/interceptors/back4app_cep_dio_interceptor.dart';
 import 'package:projetos_flutter_dio/src/modules/cep/models/back4app_cep_model.dart';
 
 class Back4AppCepRepository {
-  final _customDio = Back4AppCustomDio(
-    dioInterceptor: Back4AppCepDioInterceptor(),
-  );
+  final _customDio = Back4AppCustomDio(di<Back4AppCepDioInterceptor>());
   final String _url = '/CEP';
 
   Back4AppCepRepository();
@@ -19,7 +18,6 @@ class Back4AppCepRepository {
     try {
       await _customDio.dio.post(_url, data: cep.toJson());
     } catch (e) {
-      print(e);
       rethrow;
     }
   }

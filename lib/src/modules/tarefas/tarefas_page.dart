@@ -1,3 +1,4 @@
+import 'package:projetos_flutter_dio/main.dart';
 import 'package:projetos_flutter_dio/src/modules/tarefas/tarefas_model.dart';
 import 'package:projetos_flutter_dio/src/modules/tarefas/tarefas_repository.dart';
 import 'package:flutter/material.dart';
@@ -12,15 +13,14 @@ class TarefasPage extends StatefulWidget {
 }
 
 class _TarefasPageState extends State<TarefasPage> {
-  late TasksRepository tasksRepository;
-  late TasksModel _tasks;
+  final tasksRepository = di<TasksRepository>();
   final _descriptionEC = TextEditingController();
+  late TasksModel _tasks;
   var _finished = false;
   var _loading = false;
 
   @override
   void initState() {
-    tasksRepository = TasksRepository();
     _tasks = TasksModel(tarefas: []);
     loadTasks();
     super.initState();

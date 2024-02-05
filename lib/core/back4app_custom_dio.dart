@@ -6,7 +6,7 @@ class Back4AppCustomDio {
 
   Dio get dio => _dio;
 
-  Back4AppCustomDio({required Interceptor dioInterceptor}) {
+  Back4AppCustomDio(Interceptor dioInterceptor) {
     _dio.options.headers["Content-Type"] = "application/json";
     _dio.options.baseUrl = dotenv.get('BACK4APP_BASE_URL');
     _dio.interceptors.add(dioInterceptor);

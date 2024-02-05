@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:projetos_flutter_dio/main.dart';
 import 'package:projetos_flutter_dio/src/modules/counter/counter_mobx_service.dart';
 import 'package:projetos_flutter_dio/src/modules/counter/counter_mobx_store.dart';
 import 'package:projetos_flutter_dio/src/modules/counter/counter_provider_service.dart';
@@ -15,8 +16,8 @@ class CounterPage extends StatefulWidget {
 }
 
 class _CounterPageState extends State<CounterPage> {
-  CounterMobxService counterMobxService = CounterMobxService();
-  CounterMobXStore counterMobXStore = CounterMobXStore();
+  var counterMobxService = di<CounterMobxService>();
+  var counterMobXStore = di<CounterMobXStore>();
 
   @override
   Widget build(BuildContext context) {

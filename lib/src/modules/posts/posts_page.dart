@@ -1,7 +1,7 @@
+import 'package:projetos_flutter_dio/main.dart';
 import 'package:projetos_flutter_dio/src/modules/posts/comments/comments_page.dart';
 import 'package:projetos_flutter_dio/src/modules/posts/post_model.dart';
 import 'package:projetos_flutter_dio/src/modules/posts/repositories/dio/posts_dio_repository.dart';
-import 'package:projetos_flutter_dio/src/modules/posts/repositories/posts_repository.dart';
 import 'package:flutter/material.dart';
 
 class PostsPage extends StatefulWidget {
@@ -13,7 +13,7 @@ class PostsPage extends StatefulWidget {
 }
 
 class _PostsPageState extends State<PostsPage> {
-  late PostsRepository postsRepository;
+  final postsRepository = di<PostsDioRepository>();
 
   var posts = <PostModel>[];
 
@@ -21,7 +21,6 @@ class _PostsPageState extends State<PostsPage> {
   void initState() {
     super.initState();
     if (mounted) {
-      postsRepository = PostsDioRepository();
       loadPosts();
     }
   }
