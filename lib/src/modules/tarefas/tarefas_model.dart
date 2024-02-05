@@ -26,7 +26,7 @@ class TasksModel {
 class TaskModel {
   final String objectId;
   final String description;
-  final bool finished;
+  bool finished;
   final String createdAt;
   final String updatedAt;
 
@@ -45,8 +45,6 @@ class TaskModel {
     required this.description,
     required this.finished,
   });
-
-  set finished(bool finished) => this.finished = finished;
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
