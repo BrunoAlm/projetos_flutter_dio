@@ -1,7 +1,9 @@
+import 'package:projetos_flutter_dio/core/firebase_config.dart';
 import 'package:projetos_flutter_dio/main.dart';
 import 'package:projetos_flutter_dio/src/modules/cep/interceptors/back4app_cep_dio_interceptor.dart';
 import 'package:projetos_flutter_dio/src/modules/cep/repositories/back4app_cep_repository.dart';
 import 'package:projetos_flutter_dio/src/modules/cep/repositories/viacep_repository.dart';
+import 'package:projetos_flutter_dio/src/modules/chat/chat_repository.dart';
 import 'package:projetos_flutter_dio/src/modules/counter/counter_mobx_service.dart';
 import 'package:projetos_flutter_dio/src/modules/counter/counter_mobx_store.dart';
 import 'package:projetos_flutter_dio/src/modules/imc/imc_hive_config.dart';
@@ -15,6 +17,9 @@ class AppModule {
     // IMC Hive box config
     di.registerLazySingleton(() => ImcHiveConfig());
 
+    // Firebase | FireStore configs
+    di.registerLazySingleton(() => FirebaseConfig());
+
     // Services | Store
     di.registerLazySingleton(() => CounterMobxService());
     di.registerLazySingleton(() => CounterMobXStore());
@@ -25,6 +30,7 @@ class AppModule {
     di.registerLazySingleton(() => TasksRepository());
     di.registerLazySingleton(() => PostsDioRepository());
     di.registerLazySingleton(() => MarvelRepository());
+    di.registerLazySingleton(() => ChatRepository(di()));
 
     // DIO Interceptors
     di.registerLazySingleton(() => Back4AppTarefasDioInterceptor());

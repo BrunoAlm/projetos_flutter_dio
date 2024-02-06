@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projetos_flutter_dio/main.dart';
+import 'package:projetos_flutter_dio/src/modules/chat/chat_repository.dart';
 
 class ChatPage extends StatefulWidget {
   final String title;
@@ -9,6 +11,8 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  final _chatRepository = di<ChatRepository>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +20,14 @@ class _ChatPageState extends State<ChatPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const Center(),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () async {
+            await _chatRepository.create();
+          },
+          child: const Text('Teste'),
+        ),
+      ),
     );
   }
 }
