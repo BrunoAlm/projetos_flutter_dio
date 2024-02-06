@@ -19,6 +19,7 @@ class AppWidget extends StatelessWidget {
       child: Consumer<DarkModeService>(
         builder: (context, darkModeService, child) => MaterialApp(
           title: 'Flutter DIO',
+          debugShowCheckedModeBanner: false,
           theme:
               darkModeService.darkMode ? ThemeData.light() : ThemeData.dark(),
           home: const MyNavigation(title: 'Desafios DIO'),

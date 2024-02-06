@@ -7,9 +7,8 @@ import 'package:projetos_flutter_dio/src/modules/counter/counter_provider_servic
 import 'package:provider/provider.dart';
 
 class CounterPage extends StatefulWidget {
-  const CounterPage({super.key, required this.title});
-
   final String title;
+  const CounterPage({super.key, required this.title});
 
   @override
   State<CounterPage> createState() => _CounterPageState();

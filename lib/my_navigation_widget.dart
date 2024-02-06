@@ -1,3 +1,4 @@
+import 'package:projetos_flutter_dio/src/modules/chat/chat_page.dart';
 import 'package:projetos_flutter_dio/src/modules/imc/imc_page.dart';
 import 'package:projetos_flutter_dio/src/modules/cep/cep_page.dart';
 import 'package:projetos_flutter_dio/src/modules/counter/counter_page.dart';
@@ -26,6 +27,7 @@ class _MyNavigationState extends State<MyNavigation> {
     const PostsPage(title: 'Posts'),
     const MarvelPage(title: 'API Marvel Comics'),
     const TarefasPage(title: 'Tarefas com Back4App'),
+    const ChatPage(title: 'Chat com Firestore'),
   ];
 
   @override
@@ -36,7 +38,7 @@ class _MyNavigationState extends State<MyNavigation> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 48.0),
+            padding: const EdgeInsets.only(right: 12.0),
             child: Consumer<DarkModeService>(
               builder: (context, darkModeService, child) => IconButton(
                 onPressed: () =>
@@ -82,6 +84,10 @@ class _MyNavigationState extends State<MyNavigation> {
                     NavigationRailDestination(
                       icon: Icon(Icons.cloud_upload),
                       label: Text('Tarefas'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.chat),
+                      label: Text('Chat'),
                     ),
                   ],
                   selectedIndex: _actualPage,

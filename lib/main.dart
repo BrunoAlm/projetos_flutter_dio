@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 final di = GetIt.asNewInstance();
 
@@ -15,6 +17,10 @@ void main() async {
 
   final hiveConfig = di<ImcHiveConfig>();
   await hiveConfig.initDB();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   WidgetsFlutterBinding.ensureInitialized();
 
