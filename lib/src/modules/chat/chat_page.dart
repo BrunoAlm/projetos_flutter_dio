@@ -35,9 +35,23 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
+  _sendMessage() async {
+    if (messageEC.text.trim().isEmpty) return;
+    var chat = ChatMessageModel(
+      message: messageEC.text.trim(),
+      userId: _sharedPrefs.userId,
+      username: widget.username,
+    );
+    await _chatController.createChat(chat);
+    messageEC.clear();
+    _chatController.chatScrollCt
+        .jumpTo(_chatController.chatScrollCt.position.maxScrollExtent);
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.sizeOf(context).width;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -67,19 +81,26 @@ class _ChatPageState extends State<ChatPage> {
                   child: StreamBuilder(
                 stream: _chatController.listen(),
                 builder: (context, snapshot) {
+                  if (snapshot.inState(ConnectionState.done).hasData) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      _chatController.chatScrollCt.jumpTo(_chatController
+                          .chatScrollCt.position.maxScrollExtent);
+                    });
+                  }
                   return !snapshot.hasData
                       ? const CircularProgressIndicator()
                       : ListView(
+                          controller: _chatController.chatScrollCt,
                           children: snapshot.data!.docs.map((e) {
-                          var messageModel = ChatMessageModel.fromJson(
-                            (e.data() as Map<String, dynamic>),
-                          );
-                          return ChatMessage(
-                            isUserMessage:
-                                _sharedPrefs.userId == messageModel.userId,
-                            messageModel: messageModel,
-                          );
-                        }).toList());
+                            var messageModel = ChatMessageModel.fromJson(
+                              (e.data() as Map<String, dynamic>),
+                            );
+                            return ChatMessage(
+                              isUserMessage:
+                                  _sharedPrefs.userId == messageModel.userId,
+                              messageModel: messageModel,
+                            );
+                          }).toList());
                 },
               )),
               Container(
@@ -105,18 +126,12 @@ class _ChatPageState extends State<ChatPage> {
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                         ),
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (_) => _sendMessage(),
                       ),
                     ),
                     IconButton(
-                      onPressed: () async {
-                        var chat = ChatMessageModel(
-                          message: messageEC.text.trim(),
-                          userId: _sharedPrefs.userId,
-                          username: widget.username,
-                        );
-                        await _chatController.createChat(chat);
-                        messageEC.clear();
-                      },
+                      onPressed: () => _sendMessage(),
                       icon: Icon(
                         Icons.send,
                         color: Theme.of(context).colorScheme.primary,

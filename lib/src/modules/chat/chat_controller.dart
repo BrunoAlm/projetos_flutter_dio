@@ -6,6 +6,7 @@ import 'package:projetos_flutter_dio/src/modules/chat/repositories/chat_reposito
 
 class ChatController extends ChangeNotifier {
   final _chatRepository = di<ChatRepository>();
+  final ScrollController chatScrollCt = ScrollController();
 
   Future<void> createChat(ChatMessageModel chat) async {
     try {
