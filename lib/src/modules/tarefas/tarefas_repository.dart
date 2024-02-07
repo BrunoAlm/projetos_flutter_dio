@@ -5,37 +5,43 @@ import 'package:projetos_flutter_dio/src/modules/tarefas/tarefas_model.dart';
 
 class TasksRepository {
   final _customDio = Back4AppCustomDio(di<Back4AppTarefasDioInterceptor>());
-  String _url = '/Tarefas';
-
   TasksRepository();
 
   Future<TasksModel> getTasks(bool finished) async {
+    String url = '/Tarefas';
+
     if (finished) {
-      _url += '?where={"concluido":false}';
+      url = '$url?where={"concluido":false}';
     }
-    var result = await _customDio.dio.get(_url);
+    var result = await _customDio.dio.get(url);
     return TasksModel.fromJson(result.data);
   }
 
   Future<void> createTask(TaskModel task) async {
+    String url = '/Tarefas';
+
     try {
-      await _customDio.dio.post(_url, data: task.toJson());
+      await _customDio.dio.post(url, data: task.toJson());
     } catch (e) {
       rethrow;
     }
   }
 
   Future<void> updateTask({required TaskModel task}) async {
+    String url = '/Tarefas';
+
     try {
-      await _customDio.dio.put('$_url/${task.objectId}', data: task.toJson());
+      await _customDio.dio.put('$url/${task.objectId}', data: task.toJson());
     } catch (e) {
       rethrow;
     }
   }
 
   Future<void> deleteTask(String taskId) async {
+    String url = '/Tarefas';
+
     try {
-      await _customDio.dio.delete('$_url/$taskId');
+      await _customDio.dio.delete('$url/$taskId');
     } catch (e) {
       rethrow;
     }
