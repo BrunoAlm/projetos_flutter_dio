@@ -19,6 +19,6 @@ class ChatRepositoryV1 implements ChatRepository {
 
   @override
   Stream<QuerySnapshot> listen() {
-    return db.collection(_collection).snapshots();
+    return db.collection(_collection).orderBy('send_data').snapshots();
   }
 }

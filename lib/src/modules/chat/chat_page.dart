@@ -3,6 +3,7 @@ import 'package:projetos_flutter_dio/core/shared_preferences_config.dart';
 import 'package:projetos_flutter_dio/main.dart';
 import 'package:projetos_flutter_dio/src/modules/chat/chat_controller.dart';
 import 'package:projetos_flutter_dio/src/modules/chat/chat_message_model.dart';
+import 'package:projetos_flutter_dio/src/modules/chat/widgets/chat_message.dart';
 import 'package:projetos_flutter_dio/src/shared/dark_mode_service.dart';
 import 'package:provider/provider.dart';
 
@@ -70,63 +71,13 @@ class _ChatPageState extends State<ChatPage> {
                       ? const CircularProgressIndicator()
                       : ListView(
                           children: snapshot.data!.docs.map((e) {
-                          var chat = ChatMessageModel.fromJson(
+                          var messageModel = ChatMessageModel.fromJson(
                             (e.data() as Map<String, dynamic>),
                           );
-                          return Container(
-                            alignment: chat.userId == _sharedPrefs.userId
-                                ? Alignment.centerRight
-                                : Alignment.centerLeft,
-                            child: Container(
-                              decoration: ShapeDecoration(
-                                shape: const ContinuousRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(18),
-                                  ),
-                                ),
-                                color: chat.userId == _sharedPrefs.userId
-                                    ? Theme.of(context)
-                                        .colorScheme
-                                        .primaryContainer
-                                    : Theme.of(context)
-                                        .colorScheme
-                                        .inversePrimary,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 18,
-                                vertical: 5,
-                              ),
-                              margin: const EdgeInsets.symmetric(vertical: 18),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  chat.userId == _sharedPrefs.userId
-                                      ? const SizedBox()
-                                      : Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 5.0,
-                                          ),
-                                          child: Text(
-                                            chat.username,
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                  Text(
-                                    chat.message,
-                                    style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onBackground,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          return ChatMessage(
+                            isUserMessage:
+                                _sharedPrefs.userId == messageModel.userId,
+                            messageModel: messageModel,
                           );
                         }).toList());
                 },
