@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:projetos_flutter_dio/src/modules/chat/chat_page.dart';
 import 'package:projetos_flutter_dio/src/shared/custom_text_form_field.dart';
 
-class LoginChatPage extends StatefulWidget {
+class ChatLoginPage extends StatefulWidget {
   final String title;
-  const LoginChatPage({super.key, required this.title});
+  const ChatLoginPage({super.key, required this.title});
 
   @override
-  State<LoginChatPage> createState() => _LoginChatPageState();
+  State<ChatLoginPage> createState() => _ChatLoginPageState();
 }
 
-class _LoginChatPageState extends State<LoginChatPage> {
+class _ChatLoginPageState extends State<ChatLoginPage> {
   final usernameEC = TextEditingController();
 
   @override

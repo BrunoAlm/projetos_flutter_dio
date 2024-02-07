@@ -1,5 +1,5 @@
 import 'package:projetos_flutter_dio/src/modules/chat/chat_page.dart';
-import 'package:projetos_flutter_dio/src/modules/chat/login_chat_page.dart';
+import 'package:projetos_flutter_dio/src/modules/chat/chat_login_page.dart';
 import 'package:projetos_flutter_dio/src/modules/imc/imc_page.dart';
 import 'package:projetos_flutter_dio/src/modules/cep/cep_page.dart';
 import 'package:projetos_flutter_dio/src/modules/counter/counter_page.dart';
@@ -28,7 +28,7 @@ class _MyNavigationState extends State<MyNavigation> {
     const PostsPage(title: 'Posts'),
     const MarvelPage(title: 'API Marvel Comics'),
     const TarefasPage(title: 'Tarefas com Back4App'),
-    const LoginChatPage(title: 'Login chat'),
+    const ChatLoginPage(title: 'Login chat'),
   ];
 
   @override
