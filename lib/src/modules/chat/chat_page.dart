@@ -19,6 +19,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final _chatController = di<ChatController>();
   final _sharedPrefs = di<SharedPreferencesConfig>();
+  final focus = FocusNode();
 
   final messageEC = TextEditingController();
 
@@ -32,6 +33,7 @@ class _ChatPageState extends State<ChatPage> {
     _sharedPrefs.getUserId();
     if (mounted) {
       setState(() {});
+      focus.requestFocus();
     }
   }
 
@@ -123,11 +125,15 @@ class _ChatPageState extends State<ChatPage> {
                     Flexible(
                       child: TextField(
                         controller: messageEC,
+                        focusNode: focus,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                         ),
                         textInputAction: TextInputAction.done,
-                        onSubmitted: (_) => _sendMessage(),
+                        onSubmitted: (_) {
+                          _sendMessage();
+                          focus.requestFocus();
+                        },
                       ),
                     ),
                     IconButton(

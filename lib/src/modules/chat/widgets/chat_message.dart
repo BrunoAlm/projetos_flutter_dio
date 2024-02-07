@@ -29,7 +29,7 @@ class ChatMessage extends StatelessWidget {
           horizontal: 18,
           vertical: 5,
         ),
-        margin: const EdgeInsets.symmetric(vertical: 18),
+        margin: const EdgeInsets.symmetric(vertical: 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
