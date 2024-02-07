@@ -1,31 +1,181 @@
 import 'package:flutter/material.dart';
+import 'package:projetos_flutter_dio/core/shared_preferences_config.dart';
 import 'package:projetos_flutter_dio/main.dart';
-import 'package:projetos_flutter_dio/src/modules/chat/chat_repository.dart';
+import 'package:projetos_flutter_dio/src/modules/chat/chat_controller.dart';
+import 'package:projetos_flutter_dio/src/modules/chat/chat_message_model.dart';
+import 'package:projetos_flutter_dio/src/shared/dark_mode_service.dart';
+import 'package:provider/provider.dart';
 
 class ChatPage extends StatefulWidget {
   final String title;
-  const ChatPage({super.key, required this.title});
+  final String username;
+  const ChatPage({super.key, required this.title, required this.username});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
-  final _chatRepository = di<ChatRepository>();
+  final _chatController = di<ChatController>();
+  final _sharedPrefs = di<SharedPreferencesConfig>();
+
+  final messageEC = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    loadUser();
+  }
+
+  loadUser() async {
+    _sharedPrefs.getUserId();
+    if (mounted) {
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: Consumer<DarkModeService>(
+              builder: (context, darkModeService, child) => IconButton(
+                onPressed: () =>
+                    darkModeService.darkMode = !darkModeService.darkMode,
+                icon: Icon(
+                  darkModeService.darkMode ? Icons.dark_mode : Icons.light_mode,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            await _chatRepository.create();
-          },
-          child: const Text('Teste'),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 28.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Expanded(
+                  child: StreamBuilder(
+                stream: _chatController.listen(),
+                builder: (context, snapshot) {
+                  return !snapshot.hasData
+                      ? const CircularProgressIndicator()
+                      : ListView(
+                          children: snapshot.data!.docs.map((e) {
+                          var chat = ChatMessageModel.fromJson(
+                            (e.data() as Map<String, dynamic>),
+                          );
+                          return Container(
+                            alignment: chat.userId == _sharedPrefs.userId
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft,
+                            child: Container(
+                              decoration: ShapeDecoration(
+                                shape: const ContinuousRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(18),
+                                  ),
+                                ),
+                                color: chat.userId == _sharedPrefs.userId
+                                    ? Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer
+                                    : Theme.of(context)
+                                        .colorScheme
+                                        .inversePrimary,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 18,
+                                vertical: 5,
+                              ),
+                              margin: const EdgeInsets.symmetric(vertical: 18),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  chat.userId == _sharedPrefs.userId
+                                      ? const SizedBox()
+                                      : Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 5.0,
+                                          ),
+                                          child: Text(
+                                            chat.username,
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                  Text(
+                                    chat.message,
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }).toList());
+                },
+              )),
+              Container(
+                decoration: ShapeDecoration(
+                  shape: StadiumBorder(
+                    side: BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 1,
+                    ),
+                  ),
+                ),
+                padding: const EdgeInsets.only(left: 28, right: 8),
+                constraints: BoxConstraints(
+                  maxWidth:
+                      screenWidth > 1000 ? screenWidth / 3 : screenWidth * .8,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: TextField(
+                        controller: messageEC,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () async {
+                        var chat = ChatMessageModel(
+                          message: messageEC.text.trim(),
+                          userId: _sharedPrefs.userId,
+                          username: widget.username,
+                        );
+                        await _chatController.createChat(chat);
+                        messageEC.clear();
+                      },
+                      icon: Icon(
+                        Icons.send,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

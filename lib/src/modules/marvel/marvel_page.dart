@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 class MarvelPage extends StatefulWidget {
   final String title;
   const MarvelPage({
-    Key? key,
+    super.key,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   State<MarvelPage> createState() => _MarvelPageState();

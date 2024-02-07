@@ -13,7 +13,8 @@ void main() async {
   AppModule.start();
   await dotenv.load(fileName: ".env");
   await Hive.initFlutter();
-  await di<FirebaseConfig>().init();
+  var firebaseConfig = di<FirebaseConfig>();
+  await firebaseConfig.init();
   await di<ImcHiveConfig>().initDB();
 
   WidgetsFlutterBinding.ensureInitialized();
