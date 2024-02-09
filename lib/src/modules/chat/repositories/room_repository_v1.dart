@@ -20,6 +20,6 @@ class RoomRepositoryV1 implements RoomRepository {
 
   @override
   Stream<QuerySnapshot> getAllRooms() {
-    return db.collection('all_rooms').snapshots();
+    return db.collection('all_rooms').orderBy('room_id').snapshots();
   }
 }
