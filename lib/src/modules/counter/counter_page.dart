@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:projetos_flutter_dio/main.dart';
-import 'package:projetos_flutter_dio/src/modules/counter/counter_mobx_service.dart';
-import 'package:projetos_flutter_dio/src/modules/counter/counter_mobx_store.dart';
-import 'package:projetos_flutter_dio/src/modules/counter/counter_provider_service.dart';
+import 'package:projetos_flutter_dio/src/modules/counter/services/counter_mobx_service.dart';
+import 'package:projetos_flutter_dio/src/modules/counter/store/counter_mobx_store.dart';
+import 'package:projetos_flutter_dio/src/modules/counter/services/counter_provider_service.dart';
 import 'package:provider/provider.dart';
 
 class CounterPage extends StatefulWidget {

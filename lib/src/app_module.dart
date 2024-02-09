@@ -4,11 +4,14 @@ import 'package:projetos_flutter_dio/main.dart';
 import 'package:projetos_flutter_dio/src/modules/cep/interceptors/back4app_cep_dio_interceptor.dart';
 import 'package:projetos_flutter_dio/src/modules/cep/repositories/back4app_cep_repository.dart';
 import 'package:projetos_flutter_dio/src/modules/cep/repositories/viacep_repository.dart';
-import 'package:projetos_flutter_dio/src/modules/chat/chat_controller.dart';
+import 'package:projetos_flutter_dio/src/modules/chat/repositories/room_repository.dart';
+import 'package:projetos_flutter_dio/src/modules/chat/repositories/room_repository_v1.dart';
+import 'package:projetos_flutter_dio/src/modules/chat/rooms/chats/chat_controller.dart';
 import 'package:projetos_flutter_dio/src/modules/chat/repositories/chat_repository.dart';
 import 'package:projetos_flutter_dio/src/modules/chat/repositories/chat_repository_v1.dart';
-import 'package:projetos_flutter_dio/src/modules/counter/counter_mobx_service.dart';
-import 'package:projetos_flutter_dio/src/modules/counter/counter_mobx_store.dart';
+import 'package:projetos_flutter_dio/src/modules/chat/rooms/room_controller.dart';
+import 'package:projetos_flutter_dio/src/modules/counter/services/counter_mobx_service.dart';
+import 'package:projetos_flutter_dio/src/modules/counter/store/counter_mobx_store.dart';
 import 'package:projetos_flutter_dio/src/modules/imc/imc_hive_config.dart';
 import 'package:projetos_flutter_dio/src/modules/marvel/marvel_repository.dart';
 import 'package:projetos_flutter_dio/src/modules/posts/repositories/dio/posts_dio_repository.dart';
@@ -37,9 +40,11 @@ class AppModule {
     di.registerLazySingleton(() => PostsDioRepository());
     di.registerLazySingleton(() => MarvelRepository());
     di.registerLazySingleton<ChatRepository>(() => ChatRepositoryV1());
+    di.registerLazySingleton<RoomRepository>(() => RoomRepositoryV1());
 
     // Controllers
     di.registerLazySingleton(() => ChatController());
+    di.registerLazySingleton(() => RoomController());
 
     // DIO Interceptors
     di.registerLazySingleton(() => Back4AppTarefasDioInterceptor());

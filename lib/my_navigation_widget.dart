@@ -1,4 +1,3 @@
-import 'package:projetos_flutter_dio/src/modules/chat/chat_page.dart';
 import 'package:projetos_flutter_dio/src/modules/chat/chat_login_page.dart';
 import 'package:projetos_flutter_dio/src/modules/imc/imc_page.dart';
 import 'package:projetos_flutter_dio/src/modules/cep/cep_page.dart';
@@ -7,8 +6,7 @@ import 'package:projetos_flutter_dio/src/modules/marvel/marvel_page.dart';
 import 'package:projetos_flutter_dio/src/modules/posts/posts_page.dart';
 import 'package:projetos_flutter_dio/src/modules/tarefas/tarefas_page.dart';
 import 'package:flutter/material.dart';
-import 'package:projetos_flutter_dio/src/shared/dark_mode_service.dart';
-import 'package:provider/provider.dart';
+import 'package:projetos_flutter_dio/src/shared/dark_mode_button.dart';
 
 class MyNavigation extends StatefulWidget {
   final String title;
@@ -37,19 +35,8 @@ class _MyNavigationState extends State<MyNavigation> {
       appBar: AppBar(
         title: Text(widget.title),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 12.0),
-            child: Consumer<DarkModeService>(
-              builder: (context, darkModeService, child) => IconButton(
-                onPressed: () =>
-                    darkModeService.darkMode = !darkModeService.darkMode,
-                icon: Icon(
-                  darkModeService.darkMode ? Icons.dark_mode : Icons.light_mode,
-                ),
-              ),
-            ),
-          ),
+        actions: const [
+          DarkModeButton(),
         ],
       ),
       body: Row(
@@ -101,14 +88,9 @@ class _MyNavigationState extends State<MyNavigation> {
               ),
             ],
           ),
+          const VerticalDivider(width: 1),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Container(
-                decoration: BoxDecoration(border: Border.all()),
-                child: allChallenges[_actualPage],
-              ),
-            ),
+            child: allChallenges[_actualPage],
           )
         ],
       ),

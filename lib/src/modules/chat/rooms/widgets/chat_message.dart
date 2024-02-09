@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:projetos_flutter_dio/src/modules/chat/chat_message_model.dart';
+import 'package:projetos_flutter_dio/src/modules/chat/models/message_model.dart';
 
 class ChatMessage extends StatelessWidget {
   final bool isUserMessage;
-  final ChatMessageModel messageModel;
+  final MessageModel messageModel;
   const ChatMessage({
     super.key,
     required this.isUserMessage,

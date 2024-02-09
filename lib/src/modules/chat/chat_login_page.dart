@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projetos_flutter_dio/src/modules/chat/chat_page.dart';
+import 'package:projetos_flutter_dio/src/modules/chat/rooms/rooms_page.dart';
 import 'package:projetos_flutter_dio/src/shared/custom_text_form_field.dart';
 
 class ChatLoginPage extends StatefulWidget {
@@ -19,6 +19,7 @@ class _ChatLoginPageState extends State<ChatLoginPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        elevation: 0,
       ),
       body: Center(
         child: Padding(
@@ -32,6 +33,7 @@ class _ChatLoginPageState extends State<ChatLoginPage> {
                   controller: usernameEC,
                   label: 'Como quer ser chamado?',
                   inputBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(18),
                     borderSide: BorderSide(
                       color: Theme.of(context).colorScheme.primary,
                     ),
@@ -40,14 +42,23 @@ class _ChatLoginPageState extends State<ChatLoginPage> {
               ),
               const SizedBox(height: 30),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: ContinuousRectangleBorder(
+                        borderRadius: BorderRadius.circular(18))),
                 onPressed: () {
+                  if (usernameEC.text.trim().isEmpty) return;
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ChatPage(
-                        title: 'Chat',
+                      builder: (context) => RoomsPage(
+                        title: 'Salas de chat',
                         username: usernameEC.text.trim(),
                       ),
+
+                      // ChatPage(
+                      //   title: 'Chat',
+                      //   username: usernameEC.text.trim(),
+                      // ),
                     ),
                   );
                 },

@@ -2,6 +2,7 @@ import 'package:projetos_flutter_dio/src/modules/posts/comments/comment_model.da
 import 'package:projetos_flutter_dio/src/modules/posts/repositories/comments_repository.dart';
 import 'package:projetos_flutter_dio/src/modules/posts/repositories/dio/comments_dio_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:projetos_flutter_dio/src/shared/dark_mode_button.dart';
 
 class CommentsPage extends StatefulWidget {
   final int postId;
@@ -36,6 +37,9 @@ class _CommentsPageState extends State<CommentsPage> {
         appBar: AppBar(
           title: Text("Comentários do Post: ${widget.postId}"),
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          actions: const [
+            DarkModeButton(),
+          ],
         ),
         body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'counter_mobx_store.dart';
+part of '../store/counter_mobx_store.dart';
 
 // **************************************************************************
 // StoreGenerator
