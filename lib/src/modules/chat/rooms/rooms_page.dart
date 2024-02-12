@@ -1,12 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projetos_flutter_dio/main.dart';
-import 'package:projetos_flutter_dio/src/modules/chat/models/room_model.dart';
 import 'package:projetos_flutter_dio/src/modules/chat/rooms/chats/chat_page.dart';
 import 'package:projetos_flutter_dio/src/modules/chat/rooms/room_controller.dart';
 import 'package:projetos_flutter_dio/src/shared/custom_text_form_field.dart';
 import 'package:projetos_flutter_dio/src/shared/dark_mode_button.dart';
-import 'package:uuid/uuid.dart';
 
 class RoomsPage extends StatefulWidget {
   final String title;
